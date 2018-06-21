@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block content %}
+<body>
+
+    <div class="editar">
+        <!--Coloca o titulo para caso seja Novo Aluno ou para Editar Aluno-->
+        {% if post.nome is null %}
+        <h2>Novo Aluno</h2>
+        {% else %}
+        <h2>Editar Aluno</h2>
+        {% endif %}
+
+        <form method="POST" class="post-form">
+            {% csrf_token %}
+            <!--Entrada do nome do aluno-->
+            <label class="campos sNome" for="nome">Nome:</label><br>
+            <input type="text" name="nome" id="nome" required autofocus value="{{post.nome}}">
+            <p></p>
+
+            <!--Entrada de cpf do aluno-->
+            <label class="campos" for="cpf">CPF:</label><br>
+            <input type="text" name="cpf" id="cpf" maxlength="11" minlength="11" pattern="[0-9]{11}" placeholder="Ex.:10881615800" required value="{{post.cpf}}"><br>
+
+            <!--Tabela de entrada de Nascimento e Sexo-->
+            <table>
+                <tr>
+                    <td>
+                        <label class="campos" for="gender">Sexo:</label>   
+                    </td>
+                    <td >
+                        <label class="campos " for="nascimento">Nascimento:</label>
+                    </td>
+                </tr><br>
+                <tr>
+                    <td>
+                        <input class="sGender" type="text" list="genero" name="genero" id="genero"  maxlength="100" required autocomplete="off" value="{{post.genero}}">       
+                    </td>
+
+                    <td >
+                        <input class="sDate" type="date" name="nascimento" id="nascimento" required value="{{post.nascimento.isoformat}}">
+                        
+
+                    </td>
+                    <datalist id="genero">
+                        <option value="Masculino">masculino</option>
+                        <option value="Feminino">feminino</option>
+                    </datalist>
+                </tr>
+
+            </table>    
+            <p></p>
+
+            <!--Entrada de telefone e celular-->
+            <table> 
+                <tr>                    
+                    <td>
+                        <label class="campos" for="telefone">Telefone:</label>
+                    </td>
+                    <td>
+                        <label class="campos" for="celular">Celular:</label>
+                    </td>   
+                </tr>    
+                <tr>
+                    <td>
+                        <input class="sTelefone" type="tel" name="telefone" id="telefone" maxlength="11" value="{{post.telefone}}">
+                    </td>
+                    <td>
+                        <input class="sCelular" type="tel" name="celular" id="celular" maxlength="11" value="{{post.celular}}">
+                    </td>
+                </tr>    
+            </table><br>    
+
+            <!--Entrada de email-->
+            <label class="campos" for="email">Email:</label><br>
+            <input type="email" name="email" id="email" value="{{post.email}}">
+            <p></p>
+
+            <!--Entrada de endereço,rua-->
+            <label class="campos" for="rua">Rua:</label><br>
+            <input type="text" name="rua" id="rua" required value="{{post.rua}}">
+            <p></p>
+
+            <!--Tabela de entrada de bairro, cidade e estado-->
+            <table>
+                <tr>
+                    <td>
+                        <label class="campos" for="bairro">Bairro:</label>
+                    </td>
+                    <td>
+                        <label class="campos" for="cidade">Cidade:</label>
+                    </td>
+                    <td>
+                        <label class="campos" for="estado">Estado:</label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input class="sBairro" type="text" name="bairro" id="bairro"  required value="{{post.bairro}}">
+                    </td>
+                    <td >
+                        <input class="sCidade" type="text" name="cidade" id="cidade"  required value="{{post.cidade}}">
+                    </td>
+                    <td>
+                        <input class="sEstado" type="text" list="estado" name="estado" id="estado" required value="{{post.estado}}">
+                    </td>
+                </tr>
+            </table><br>    
+
+            <!--Entrada do complemento de endereço-->
+            <label class="campos" for="complemento">Complemento:</label><br>
+            <input type="text" name="complemento" id="complemento" value="{{post.complemento}}">
+            <p></p>
+
+            <!--Entrada do nível do aluno-->
+            <label class="campos" for="nome">Nivelamento:</label><br>
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" list="nivelamento" name="nivelamento" id="nivelamento" required value="{{post.nivelamento}}">
+                    </td>
+                    <datalist id="nivelamento">
+                        <option value="Mouse e Teclado">mouseTeclado</option>
+                        <option value="Iniciante">iniciante</option>
+                        <option value="Internet Básico">internetBasico</option>
+                        <option value="Escritório">escritorio</option>
+                        <option value="Linux básico">linuxBasico</option>
+                        <option value="Programação">programacao</option>
+                    </datalist>
+                </tr>
+            </table>
+            <p></p>
+
+            <!--Botão de confirmação-->
+            <button type="submit" class="save btn btn-default">Salvar</button>
+        </form>
+    </div>
+</body>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block content %}
+<body>
+   <div id="aluno">
+    <table >
+
+        <colgroup>
+        <col class="coluna1">
+        <col class="coluna2">
+    </colgroup>
+
+    <caption>Perfil do aluno</caption>
+    <tr>
+        <td class="itens">Nome:</td>
+        <td> {{ aluno.nome }} </td>
+    </tr>
+    <tr>
+        <td class="itens">CPF:</td>
+        <td>{{ aluno.cpf }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Sexo:</td>
+        <td>{{ aluno.genero }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Data de Nascimento:</td>
+        <td>{{ aluno.nascimento }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Telefone:</td>
+        <td>{{ aluno.telefone }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Celular:</td>
+        <td>{{ aluno.celular }}</td>
+    </tr>
+    <tr>
+        <td class="itens">E-Mail:</td>
+        <td>{{ aluno.email }}</td>
+    </tr>
+
+    <tr>
+        <td class="itens">Rua:</td>
+        <td>{{ aluno.rua }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Bairro:</td>
+        <td>{{ aluno.bairro }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Cidade:</td>
+        <td>{{ aluno.cidade }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Estado:</td>
+        <td>{{ aluno.estado }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Complemento:</td>
+        <td>{{ aluno.complemento }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Nivelamento:</td>
+        <td>{{ aluno.nivelamento }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Numero de Matricula:</td>
+        <td>{{ aluno.numero_matricula }}</td>
+    </tr>
+</table>
+<p></p>
+
+<a class="btn btn-default" href="{% url 'aluno:editar' pk=aluno.pk %}"><span class="glyphicon glyphicon-pencil"></br>Editar</span></a> <!-- Botao para editar o aluno -->
+
+<a class="btn btn-default" href="{% url 'aluno:remover' pk=aluno.pk %}" onclick="return confirm('Você tem certeza que quer deletar o(a) aluno(a) {{aluno.nome}}?')"><span class="fa fa-trash"></br>Excluir</span> </a>  <!-- Botao para e remover o aluno -->
+
+<a class="btn btn-default" onclick="if(document.getElementById('cursos_aluno').style.display=='none') {document.getElementById('cursos_aluno').style.display=''; document.getElementById('inscricao').style.display='none'}else{document.getElementById('cursos_aluno').style.display='none'}"><span class="glyphicon glyphicon-book"></br>Turmas</span></a>
+
+<a class="btn btn-default" onclick="if(document.getElementById('inscricao').style.display=='none') {document.getElementById('inscricao').style.display=''; document.getElementById('cursos_aluno').style.display='none'}else{document.getElementById('inscricao').style.display='none'}"><span class="glyphicon glyphicon-user"></br>Inscrição</span></a>
+
+<a  class="btn btn-default" href="{% url 'aluno:lista' %}"><span  class="glyphicon glyphicon-arrow-left"><br/>Voltar</span></a>
+
+{% if messages %}
+<div class="message">
+</br>
+{% for msg in messages %}
+<div class="alert alert-{{msg.level_tag}}" role="alert">
+    {{ msg }}
+</div>
+{% endfor %}
+</div>
+{% endif %}
+
+<div class="pure-menu pure-menu-open" style="display:none" id="cursos_aluno">
+    <h2>Turmas em que o aluno está inscrito</h2>
+    <ul>
+     {% for turma in turmas %}
+     {% for alunos in turma.alunos_inscritos.all %}
+     {% if alunos.numero_matricula == aluno.numero_matricula %}
+     <a href="{% url 'cursos:details_turma' pk=turma.pk %}"><h4>{{turma.curso}} - {{turma.codigo}}</h4></a>
+ </br>
+ {% endif %}
+ {% endfor %}
+ {% endfor %}
+</ul>
+</div>
+
+<div id="inscricao" style="display:none">
+
+    {% if turmas %}
+
+    <h2>Turmas Disponíveis para inscrição</h2>
+    <form method="GET" class="post-form">
+        
+        {% for turma in turmas %}
+        <table class="inscricaoAluno">
+            <tr>
+                <td class="inscricaoAluno"><input type="checkbox" name="turma" value= "{{ turma.codigo }}"></td>
+                <td class="inscricaoAluno">{{ turma.curso.nome }} - {{turma.codigo}}</td> 
+            </tr>
+        </table><br>
+        <p></p><br>
+        {% endfor %}
+        <button class="btn btn-primary" type="submit">Inscrever</button>
+    </form>
+
+    {% else %}
+    <h4>Não há turmas cadastradas no sistema!</h4>
+    {% endif %}
+</div>   
+</div>
+</body>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,31 @@
+{% extends "painel.html" %}
+
+{% block breadcrumb %}
+{{ block.super }}
+<li class="item"><a href="{% url 'usuarios:edit' %}">Editar Conta</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+
+<form class="editar_user" action = "{% url 'usuarios:edit' %}" method="post">
+    {% csrf_token %}
+
+    <div>
+        <span class="span">Nome:</span></br> <input class="input100" type="text" name="name" id = "name" value="{{user.name}}">
+    </div>
+
+    <div class="wrap-input100 validate-input">
+        <span class="span">Username:</span></br> <input class="input100" type="text" name="username" id = "username" required value="{{user.username}}">
+    </div>
+
+    <div class="wrap-input100 validate-input">
+        <span class="span">Email:</span></br> <input class="input100" type="email" name="email" id = "email" required value="{{post.email}}">
+    </div>
+
+    <div class="container-login100-form-btn">
+        <button class="login100-form-btn" type="submit">
+            Salvar Modificações
+        </button>
+    </div>
+</form>
+{% endblock %}

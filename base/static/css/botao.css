@@ -1,0 +1,16 @@
+.botao  {
+	position:absolute;
+	left:490px;
+	width: 50%;	
+}
+
+ .teste {
+	width: 46.5%;
+	height:40px;
+}
+
+.pesquisa-alunos .botaoPesquisar{
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 4px;
+}

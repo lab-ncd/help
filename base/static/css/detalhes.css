@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css?family=Vast+Shadow');
+
+body {
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        
+        #aluno, #turma{
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+       #aluno table, #turma table { 
+            margin:0 auto;
+            border-spacing:0;
+        }
+        
+        #aluno caption, #turma caption {
+            font-size:130%;
+            font-weight:bold;
+            padding:5px 0;
+            border-bottom:none;
+        }
+        
+        #aluno tr td, #turma tr td{
+            border-bottom: 1px solid #ddd;
+            border-right:none;
+            padding:5px;
+        }
+        
+        #aluno td, #turma td { 
+            text-align:left;
+        }
+
+        #aluno td.itens, #turma td.itens{
+                        font-weight:bold;
+        }
+        
+        #aluno th, #turma th {
+            text-align:left;
+        } 
+        
+        #aluno tbody tr:nth-child(odd), #turma tbody tr:nth-child(odd){
+            background-color: #7386D5;          
+        }
+
+        #aluno tr:hover, #turma tr:hover {
+            background-color: #fff;
+        }
+
+        #aluno .coluna1, #turma .coluna1{
+            background-color: #FFF;
+            width: 175px;
+        }
+        #aluno .coluna2, #turma .coluna2{
+            width: 850px;   
+        }
+		
+		#aluno .dadosAluno{
+		text-transform: capitalize;
+		}
+		
+		#aluno td.inscricaoAluno{
+		background-color: #ddd;
+		text-align: left;
+		float: left;
+		margin-bottom: -1px;
+		}
+		#aluno table.inscricaoAluno{
+		float: left;
+		}
+		
+        #turma .titulo{
+            color: #3a5fcd;
+        }
+
+        

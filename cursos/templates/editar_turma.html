@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="cadastro">
+    <h2>Edição da turma</h2>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <label class="campos" for="codigo">Código:</label><br>
+        <input type="text" name="codigo" id="codigo" value="{{post.codigo}}"><br>
+        <p></p>
+
+        <label class="campos" for="professor">Professor(a):</label><br>
+        <input type="text" name="professor" id="professor" value="{{post.professor}}"><br>
+        <p></p>
+
+        <label class="campos" for="vagas_presencial">Vagas:</label><br>
+        <input type="text" name="vagas_presencial" id="vagas_presencial" value="{{post.vagas_presencial}}"><br>
+        <p></p>
+
+        <label class="campos" for="vagas_lista_espera">Vagas lista de espera:</label><br>
+        <input type="text" name="vagas_lista_espera" id="vagas_lista_espera" value="{{post.vagas_lista_espera}}"><br>
+        <p></p>
+
+        <label class="campos" for="about">Informações adicionais:</label><br>
+        <input type="text" name="about" id="about" value="{{post.about}}"><br>
+        <p></p>
+
+        <table>
+            <tr>
+                <td>
+                    <label class="campos" for="inicio">Data de início:</label>
+                </td>
+                <td>
+                    <label class="campos" for="final">Data de término:</label>
+                </td>
+            </tr>
+
+            <td>
+                <input class="sDate" type="date" name="inicio" id="inicio" value="{{post.inicio.isoformat}}">  
+            </td>
+            <td >
+                <input class="sDate" type="date" name="final" id="final" value="{{post.final.isoformat}}">  
+            </td>
+        </table>
+        <!--Botão de confirmação-->
+        <button type="submit" class="save btn btn-default">Salvar</button>
+    </form>
+    
+</div>
+
+{% endblock %}

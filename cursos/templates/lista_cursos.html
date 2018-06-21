@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="listagemCurso">
+	
+	<h2>Listagem de Cursos do NCD</h4>
+		
+	</div>
+
+	{% for course in cursos %}
+	<div class="nomeCurso">
+
+		<h3><a href="{% url 'cursos:details_curso' course.slug %}" title="">{{ course.nome }}</a></h4>
+			
+		</div>
+		{% empty %}
+		<div class="nomeCurso">
+			
+			<p>Nenhum curso está disponível na plataforma</p>
+
+		</div>
+		{% endfor %}
+		{% endblock %}

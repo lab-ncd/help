@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div id="detalhesCurso">
+    <!--Exibe o nome do curso -->
+    <div id="infoCurso">
+        <h1 class="cursoNome">{{ cursos }}</h1>
+
+        <h3>Sobre o Curso</h3>
+        <!--Exibe a descrição do curso -->
+        <p class="descricaoCurso">{{ cursos.description }}</p>
+    </div>    
+    <!--Exibe as turmas cadastradas -->
+    <h3>Lista de Turmas cadastradas</h3>
+
+    {% for turma in turmas %}
+    <tr>
+        <td>Código:</td>
+        <td>{{ turma }}</td>
+        <td><a href="{% url 'cursos:details_turma' pk=turma.pk %}"><button type="submit"  class="botaoDetalhar">Detalhar</button></a></td><br>
+    </tr><br>
+    
+
+    {% empty %}
+
+    <p>Nenhuma turma cadastrada neste curso</p>
+
+    {% endfor %}
+
+
+
+    <!--Cadastrando uma nova turma -->
+    <button type="submit" class="save btn btn-default" onclick="if(document.getElementById('cadastro').style.display=='none') {document.getElementById('cadastro').style.display=''}else{document.getElementById('cadastro').style.display='none'}">Cadastre uma nova Turma</button>
+
+</div>
+
+<div id="cadastro" style="display:none">
+
+    <h2>Nova turma</h2>
+
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <label class="campos" for="codigo">Código:</label><br>
+        <input type="text" name="codigo" id="codigo" required><br>
+        <p></p>
+
+        <label class="campos" for="professor">Professor(a):</label><br>
+        <input type="text" name="professor" id="professor" required><br>
+        <p></p>
+
+        <table>
+            <tr>
+                <td>
+                    <label class="campos" for="vagas_presencial">Vagas:</label>
+                </td>
+                <td>
+                    <label class="campos" for="vagas_lista_espera">Vagas lista de espera:</label>
+                </td>
+            </tr>
+
+            <td>
+                <input type="number" name="vagas_presencial" id="vagas_presencial" required>  
+            </td>
+            <td >
+                <input type="number" name="vagas_lista_espera" id="vagas_lista_espera" required>
+            </td>
+        </table><br>
+        
+        <label class="campos" for="about">Informações adicionais:</label><br>
+        <input type="text" name="about" id="about" required><br>
+        <p></p>
+
+        <table>
+            <tr>
+                <td>
+                    <label class="campos" for="inicio">Data de início:</label>
+                </td>
+                <td>
+                    <label class="campos" for="final">Data de término:</label>
+                </td>
+            </tr>
+
+            <td>
+                <input class="sDate" type="date" name="inicio" id="inicio" required>  
+            </td>
+            <td >
+                <input class="sDate" type="date" name="final" id="final" required>  
+            </td>
+        </table>
+        <!--Botão de confirmação-->
+        <button type="submit" class="save btn btn-default">Salvar</button>
+    </form>
+</div>
+
+{% endblock %}

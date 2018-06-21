@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div id="menu-painel">
+    <ul>
+        <li class="item"><a href="{% url 'usuarios:painel' %}">Minha Conta</a></li>
+        <li class="item"><a href="{% url 'usuarios:edit' %}">Editar Conta</a></li>
+        <li class="item"><a href="{% url 'usuarios:edit_password' %}">Editar Senha</a></li>
+    </ul>
+</div>
+
+<div id="breadcrumb">
+    <ul class="breadcrumb">
+        {% block breadcrumb %}
+        <li class="item"><a href="{% url 'usuarios:painel' %}">Meu Painel</a></li>
+        {% endblock %}
+    </ul>
+</div>
+
+<div id="dados">
+    {% block dashboard_content %}
+    {% if user.name%}<p class="item"><strong>Nome</strong>: {{ user.name }}</p>{% endif %}
+    <p class="item"><strong>Usuário</strong>: {{ user }}</p>
+    <p class="item"><strong>E-mail</strong>: {{ user.email }}</p>
+    {% endblock %}
+</div>
+
+{% endblock %}

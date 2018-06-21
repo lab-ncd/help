@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div id="turma">
+    <h1 class="titulo">
+      {{turmas.curso}} - {{ turmas }}
+  </h1>
+</div>
+
+<div id="turma">
+    <table >
+
+        <colgroup>
+        <col class="coluna1">
+        <col class="coluna2">
+    </colgroup>
+
+    <caption>Perfil da turma</caption>
+    <tr>
+        <td class="itens">Curso:</td>
+        <td> {{ turmas.curso }} </td>
+    </tr>
+    <tr>
+        <td class="itens">Código:</td>
+        <td>{{ turmas.codigo }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Professor:</td>
+        <td>{{ turmas.professor }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Vagas(Presencial):</td>
+        <td>{{ turmas.vagas_presencial }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Vagas(Lista de Espera):</td>
+        <td>{{ turmas.vagas_lista_espera }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Data de Início:</td>
+        <td>{{ turmas.inicio }}</td>
+    </tr>
+    <tr>
+        <td class="itens">Previsão de Término:</td>
+        <td>{{ turmas.final }}</td>
+    </tr>
+</table>
+</div>
+
+<p></p>
+
+<a class="btn btn-default" href="{% url 'cursos:editar_turma' pk=turmas.pk %}"><span class="glyphicon glyphicon-pencil"></br>Editar</span></a> <!-- Botao para editar a turma -->
+
+<a class="btn btn-default" href="{% url 'cursos:remover_turma' pk=turmas.pk %}" onclick="return confirm('Você tem certeza que quer deletar a turma {{turmas.curso}} - {{turmas.codigo}}?')"><span class="fa fa-trash"></br>Excluir</span> </a>  <!-- Botao para e remover a turma -->
+
+<a class="btn btn-default" onclick="if(document.getElementById('turma_alunos').style.display=='none') {document.getElementById('turma_alunos').style.display=''; document.getElementById('pauta').style.display='none'; document.getElementById('espera').style.display='none'}else{document.getElementById('turma_alunos').style.display='none'}"><span class="glyphicon glyphicon-book"></br>Alunos</span></a>
+
+<a class="btn btn-default" onclick="if(document.getElementById('pauta').style.display=='none') {document.getElementById('pauta').style.display=''; document.getElementById('turma_alunos').style.display='none'; document.getElementById('espera').style.display='none'}else{document.getElementById('pauta').style.display='none'}"><span class="fa fa-list"></br>Pauta</span></a>
+
+<a class="btn btn-default" onclick="if(document.getElementById('espera').style.display=='none') {document.getElementById('espera').style.display=''; document.getElementById('turma_alunos').style.display='none'; document.getElementById('pauta').style.display='none'}else{document.getElementById('espera').style.display='none'}"><span class="fa fa-ban"></br>Espera</span></a>
+
+<a  class="btn btn-default" href="{% url 'cursos:details_curso' slug=turmas.curso.slug %}"><span  class="glyphicon glyphicon-arrow-left"><br/>Voltar</span></a>
+
+{% if messages %}
+<div class="message">
+</br>
+{% for msg in messages %}
+<div class="alert alert-{{msg.level_tag}}" role="alert">
+    {{ msg }}
+</div>
+{% endfor %}
+</div>
+{% endif %}
+
+<div id="turma_alunos" style="display:none">
+    <form method="GET" class="post-form">
+        {% if alunos %}
+        <h2>Alunos inscritos no curso</h2>
+        <table class="tabelaInscritos table table-bordered">
+            {% for aluno in alunos %}
+            <tr>
+                <td class="col-lg-1 "><input type="checkbox" name="a" value= "{{ aluno.pk }}"></td>
+                <td class="col-lg-8">{{ aluno.nome }}</td>  
+                <td class="col-lg-3">{{aluno.numero_matricula}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button class="btn btn-primary" type="submit">Remover aluno</button>
+        {% else %}
+        <h4>Não há alunos inscritos na turma!</h4>
+        {% endif %}   
+    </form>
+</div>
+
+<div id="pauta" style="display:none"> 
+    <form method="GET" class="post-form">
+        {% if turmas.pauta.first %}
+    </br>
+    <table class="table table-hover table-bordered tabelaPauta">  
+        <tr>
+            <td class="col-lg-6 info tabelaFalta"><h3>Alunos</h3></td>
+            <td class="col-lg-2 info tabelaFalta" ><h3>Horas</h3></td>
+            <td class="col-lg-4 info tabelaFalta"><h3>Total de Faltas</h3></td>
+        </tr>
+        {% for pauta in turmas.pauta.all %}
+        <tr>
+            <td><h4>{{ pauta.aluno }}</h4></td>
+            <td><input type="number" name="h" id="horas_faltadas" value= "0"></td>
+            <td><h4 class="tabelaFalta">{{pauta.horas_faltadas}}</h4></td>
+        </tr> 
+        {% endfor %}
+    </table>
+    <button class="btn btn-primary" type="submit">Salvar</button>
+    {% else %}
+    <h4>Não há alunos inscritos na turma!</h4>
+    {% endif %}
+</form>
+</div>
+
+<div id="espera" style="display:none">
+    <form method="GET" class="post-form">
+        {% if espera %}
+        <h2>Alunos na lista de espera</h2>
+        <table class="tabelaInscritos table table-bordered">
+            {% for aluno in espera %}
+            <tr>
+                <td class="col-lg-1"><input type="checkbox" name="e" value= "{{ aluno.pk }}"></td>
+                <td class="col-lg-8">{{ aluno.nome }}</td>  
+                <td class="col-lg-3">{{aluno.numero_matricula}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button class="btn btn-primary" type="submit" name="mover" value="1">Mover aluno</button>
+        <button class="btn btn-primary" type="submit" name="remover" value="1">Remover aluno</button>
+        {% else %}
+        <h4>Não há alunos na lista de espera!</h4>
+        {% endif %}   
+    </form>
+</div>
+
+{% endblock %}

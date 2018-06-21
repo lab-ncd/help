@@ -1,0 +1,151 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>NCD</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <link rel="stylesheet" href="{% static 'css/style4.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detalhes.css' %}">
+    
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>NCD HELP!</h3>
+                <strong>HELP!</strong>
+            </div>
+
+            <ul class="list-unstyled components">
+
+             <li>
+                <a href="{% url 'base:home' %}">
+                    <i class="glyphicon glyphicon-home"></i>
+                    Home
+                </a>
+            </li>
+            
+            <li class="inactive">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-user"></i>
+                    Aluno
+                </a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li><a href="{% url 'aluno:novo' %}">Novo</a></li>
+                    <li><a href="{% url 'aluno:pesquisa' %}">Pesquisa</a></li>
+                    <li><a href="{% url 'aluno:lista' %}">Lista</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#cursoSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="fa fa-edit"></i>
+                    Curso
+                </a>
+                <ul class="collapse list-unstyled" id="cursoSubmenu">
+                    <li><a href="{% url 'cursos:lista_cursos' %}">Lista</a></li>
+                    <li><a href="{% url 'cursos:pesquisa_turma' %}">Pesquisar Turma</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#listaSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="fa fa-group"></i>
+                    Lista de espera
+                </a>
+                <ul class="collapse list-unstyled" id="listaSubmenu">
+                    <li><a href="#">Novo</a></li>
+                    <li><a href="#">Remover</a></li>
+                    <li><a href="#">Lista</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#listaPonto" data-toggle="collapse" aria-expanded="false">
+                    <i class="fa fa-hourglass-end"></i>
+                    Ponto
+                </a>
+                <ul class="collapse list-unstyled" id="listaPonto">
+                    <li><a href="#">Entrada</a></li>
+                    <li><a href="#">Saída</a></li>
+                    <li><a href="#">Banco de Horas</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-send"></i>
+                    Contato
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                        <i class="glyphicon glyphicon-align-left"></i>
+                        <span>Menu</span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'usuarios:painel' %}">Painel</a></li>
+                        <li><a href="{% url 'usuarios:logout' %}">Sair</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        {% block content %}
+        {% endblock %}
+        
+    </div>
+</div>
+
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<!-- Bootstrap Js CDN -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+ $(document).ready(function () {
+     $('#sidebarCollapse').on('click', function () {
+         $('#sidebar').toggleClass('active');
+     });
+ });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // messages timeout for 10 sec 
+        setTimeout(function() {
+            $('.message').fadeOut('slow');
+                }, 5000); // <-- time in milliseconds, 1000 =  1 sec
+
+        // delete message
+        $('.alert alert-{{msg.level_tag}}').live('click',function(){
+            $('.alert alert-{{msg.level_tag}}').parent().attr('style', 'display:none;');
+        })
+    });
+</script>
+
+</body>
+</html>
